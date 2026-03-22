@@ -25,7 +25,7 @@ pipeline{
         }
         stage ('Code coverage'){
             steps {
-                sh 'mvn jaococ:report'
+                sh 'mvn jacoco:report'
             }
         }
         stage ('Public Test Results'){
