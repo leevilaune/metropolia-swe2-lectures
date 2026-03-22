@@ -31,8 +31,8 @@ pipeline{
         stage ('Public Test Results'){
             steps {
                 junit '**/target/surefire-reports/*.xml'
-                sh 'chmod 600 ${SSH_KEY_PATH}'
-                sh "scp -i ${SSH_KEY_PATH} -o StrictHostKeyChecking -r target/site ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}"
+                sh "chmod 600 ${SSH_KEY_PATH}"
+                sh "scp -i ${SSH_KEY_PATH} -o StrictHostKeyChecking=no -r target/site ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}"
             }
         }
         stage('Build & Push Docker Image') {
