@@ -13,11 +13,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         ShoppingCart cart = new ShoppingCart();
 
-        System.out.println("Give language code");
+        System.out.println("Give language code\n{en, jp, fi, sv}");
         String langCode = scanner.nextLine();
-        System.out.println("Give country code");
-        String countryCode = scanner.nextLine();
-        Locale locale = new Locale(langCode, countryCode);
+        Locale locale = new Locale(langCode);
 
         ResourceBundle bundle = ResourceBundle.getBundle("messages_"+langCode, locale);
 
