@@ -1,4 +1,5 @@
-package dev.onesnzeroes.fuelcalculator;
+package dev.onesnzeroes.fuelcalculator.view;
+import dev.onesnzeroes.fuelcalculator.controller.FuelCalculatorController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -29,8 +30,12 @@ public class FuelCalculatorUI extends Application {
 
     private VBox root;
 
+    private FuelCalculatorController controller;
+
     @Override
     public void start(Stage stage) {
+
+        this.controller = new FuelCalculatorController(this);
 
         ResourceBundle localization = this.getLocale("en");
         this.currentLocale = new Locale("en");
@@ -82,14 +87,12 @@ public class FuelCalculatorUI extends Application {
 
         this.btnCalculate.setOnAction(e -> {
             try {
-                double distance = Double.parseDouble(this.txtDistance.getText());
-                double fuel = Double.parseDouble(this.txtFuel.getText());
-                double consumption = fuel / distance * 100;
-                NumberFormat nf = NumberFormat.getNumberInstance(this.currentLocale);
-                nf.setMinimumFractionDigits(2);
-                nf.setMaximumFractionDigits(2);
+                NumberFormat nf = NumberFormat.getNumberInstance(currentLocale);
+                double distance = nf.parse(txtDistance.getText()).doubleValue();
+                double fuel = nf.parse(txtFuel.getText()).doubleValue();
+                double consumption = this.controller.calculateConsumption(fuel,distance);
 
-                String formatted = nf.format(consumption);
+                String formatted = formatNumber(consumption);
                 this.lblResult.setText(localization.getString("label-consumption") + ": " + formatted + " L/100km");            } catch (Exception ex) {
                 this.lblResult.setText(localization.getString("error-invalid-input"));
             }
@@ -106,14 +109,12 @@ public class FuelCalculatorUI extends Application {
 
         this.btnCalculate.setOnAction(e -> {
             try {
-                double distance = Double.parseDouble(this.txtDistance.getText());
-                double fuel = Double.parseDouble(this.txtFuel.getText());
-                double consumption = fuel / distance * 100;
-                NumberFormat nf = NumberFormat.getNumberInstance(this.currentLocale);
-                nf.setMinimumFractionDigits(2);
-                nf.setMaximumFractionDigits(2);
+                NumberFormat nf = NumberFormat.getNumberInstance(currentLocale);
+                double distance = nf.parse(txtDistance.getText()).doubleValue();
+                double fuel = nf.parse(txtFuel.getText()).doubleValue();
+                double consumption = this.controller.calculateConsumption(fuel,distance);
 
-                String formatted = nf.format(consumption);
+                String formatted = formatNumber(consumption);
                 this.lblResult.setText(localization.getString("label-consumption") + ": " + formatted + " L/100km");            } catch (Exception ex) {
                 this.lblResult.setText(localization.getString("error-invalid-input"));
             }
@@ -134,19 +135,31 @@ public class FuelCalculatorUI extends Application {
                     : "-fx-text-alignment: left;");
             this.btnCalculate.setStyle(isRTL ? "-fx-text-alignment: right;"
                     : "-fx-text-alignment: left;");
+            this.txtDistance.setStyle(isRTL ? "-fx-text-alignment: right;"
+                    : "-fx-text-alignment: left;");
+            this.txtFuel.setStyle(isRTL ? "-fx-text-alignment: right;"
+                    : "-fx-text-alignment: left;");
         });
     }
 
-    public boolean isRTL(String la){
+    private boolean isRTL(String la){
         String lang = new Locale(la).getLanguage();
         return lang.equals("fa");
+    }
+
+    private String formatNumber(double num){
+        NumberFormat nf = NumberFormat.getNumberInstance(this.currentLocale);
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+
+        return nf.format(num);
     }
 
     private EventHandler<ActionEvent> createLanguageHandler(String lang) {
         return e -> reload(lang);
     }
 
-    public ResourceBundle getLocale(String la){
+    private ResourceBundle getLocale(String la){
         Locale locale = new Locale(la);
         return ResourceBundle.getBundle("translations_"+la, locale);
     }
