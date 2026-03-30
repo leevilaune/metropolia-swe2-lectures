@@ -81,7 +81,7 @@ public class FuelCalculatorUI extends Application {
 
         Scene scene = new Scene(this.root, 350, 250);
 
-        stage.setTitle(localization.getString("label-title"));
+        stage.setTitle(localization.getString("label-title") + " - Leevi Laune");
         stage.setScene(scene);
         stage.show();
 
