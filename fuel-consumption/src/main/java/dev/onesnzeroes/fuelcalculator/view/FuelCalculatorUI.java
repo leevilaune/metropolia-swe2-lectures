@@ -90,7 +90,7 @@ public class FuelCalculatorUI extends Application {
                 NumberFormat nf = NumberFormat.getNumberInstance(currentLocale);
                 double distance = nf.parse(txtDistance.getText()).doubleValue();
                 double fuel = nf.parse(txtFuel.getText()).doubleValue();
-                double consumption = this.controller.calculateConsumption(fuel,distance);
+                double consumption = this.controller.calculateConsumption(fuel,distance, this.currentLocale.getLanguage());
 
                 String formatted = formatNumber(consumption);
                 this.lblResult.setText(this.controller.getUIString("label-consumption", this.currentLocale.getLanguage()) + ": " + formatted + " L/100km");            } catch (Exception ex) {
@@ -112,10 +112,11 @@ public class FuelCalculatorUI extends Application {
                 NumberFormat nf = NumberFormat.getNumberInstance(currentLocale);
                 double distance = nf.parse(txtDistance.getText()).doubleValue();
                 double fuel = nf.parse(txtFuel.getText()).doubleValue();
-                double consumption = this.controller.calculateConsumption(fuel,distance);
+                double consumption = this.controller.calculateConsumption(fuel,distance, this.currentLocale.getLanguage());
 
                 String formatted = formatNumber(consumption);
-                this.lblResult.setText(this.controller.getUIString("label-consumption", this.currentLocale.getLanguage()) + ": " + formatted + " L/100km");            } catch (Exception ex) {
+                this.lblResult.setText(this.controller.getUIString("label-consumption", this.currentLocale.getLanguage()) + ": " + formatted + " L/100km");
+            } catch (Exception ex) {
                 this.lblResult.setText(this.controller.getUIString("error-invalid-input", this.currentLocale.getLanguage()));
             }
         });

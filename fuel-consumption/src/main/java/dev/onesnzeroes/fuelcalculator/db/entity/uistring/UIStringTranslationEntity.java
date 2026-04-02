@@ -1,5 +1,6 @@
 package dev.onesnzeroes.fuelcalculator.db.entity.uistring;
 
+import dev.onesnzeroes.fuelcalculator.db.entity.LanguageEntity;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,14 +12,15 @@ public class UIStringTranslationEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uiStringId", nullable = false)
     private UIStringEntity uiStringId;
-    @Column(name="iso639code")
-    private String iso639Code;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "language", nullable = false)
+    private LanguageEntity language;
     @Column(name="string")
     private String uiString;
 
-    public UIStringTranslationEntity(UIStringEntity uiStringId, String iso639Code, String uiString) {
+    public UIStringTranslationEntity(UIStringEntity uiStringId, LanguageEntity language, String uiString) {
         this.uiStringId = uiStringId;
-        this.iso639Code = iso639Code;
+        this.language = language;
         this.uiString = uiString;
     }
 
@@ -32,12 +34,12 @@ public class UIStringTranslationEntity {
         this.uiStringId = uiStringId;
     }
 
-    public String getIso639Code() {
-        return iso639Code;
+    public LanguageEntity getLanguage() {
+        return language;
     }
 
-    public void setIso639Code(String iso639Code) {
-        this.iso639Code = iso639Code;
+    public void setLanguage(LanguageEntity iso639Code) {
+        this.language = iso639Code;
     }
 
     public String getUiString() {
@@ -52,7 +54,7 @@ public class UIStringTranslationEntity {
     public String toString() {
         return "UIStringTranslationEntity{" +
                 "uiStringId=" + uiStringId +
-                ", iso639Code='" + iso639Code + '\'' +
+                ", language='" + language + '\'' +
                 ", uiString='" + uiString + '\'' +
                 '}';
     }

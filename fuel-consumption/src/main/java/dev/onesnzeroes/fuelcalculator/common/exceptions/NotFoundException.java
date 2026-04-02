@@ -1,4 +1,4 @@
-package dev.onesnzeroes.fuelcalculator.db.exceptions;
+package dev.onesnzeroes.fuelcalculator.common.exceptions;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String message) {

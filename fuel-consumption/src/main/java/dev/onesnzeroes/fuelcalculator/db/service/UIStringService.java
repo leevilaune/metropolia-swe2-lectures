@@ -1,15 +1,14 @@
 package dev.onesnzeroes.fuelcalculator.db.service;
 
+import dev.onesnzeroes.fuelcalculator.db.DBConnection;
 import dev.onesnzeroes.fuelcalculator.db.entity.uistring.UIStringEntity;
 import dev.onesnzeroes.fuelcalculator.db.entity.uistring.UIStringTranslationEntity;
-import dev.onesnzeroes.fuelcalculator.db.exceptions.NotFoundException;
+import dev.onesnzeroes.fuelcalculator.common.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
 public class UIStringService {
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("fuel_calculation");
-
     public void saveTranslation(UIStringEntity record) {
-        EntityManager em = this.emf.createEntityManager();
+        EntityManager em = DBConnection.getInstance().createEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
@@ -24,10 +23,10 @@ public class UIStringService {
     }
 
     public UIStringTranslationEntity findTranslation(String id, String lang) {
-        try (EntityManager em = this.emf.createEntityManager()) {
+        try (EntityManager em = DBConnection.getInstance().createEntityManager()) {
             UIStringEntity entity = em.find(UIStringEntity.class, id);
             return entity.getTranslations().stream()
-                    .filter(trans -> trans.getIso639Code().equalsIgnoreCase(lang))
+                    .filter(trans -> trans.getLanguage().getId().equalsIgnoreCase(lang))
                     .findFirst()
                     .orElseThrow(() -> new NotFoundException(String.format("String %s not found for language %s",id,lang)));
         }
