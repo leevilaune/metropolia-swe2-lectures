@@ -40,14 +40,14 @@ public class FuelCalculatorUI extends Application {
         ResourceBundle localization = this.getLocale("en");
         this.currentLocale = new Locale("en");
 
-        this.lblDistance = new Label(localization.getString("label-distance"));
-        this.lblFuel = new Label(localization.getString("label-fuel"));
+        this.lblDistance = new Label(this.controller.getUIString("label-distance", this.currentLocale.getLanguage()));
+        this.lblFuel = new Label(this.controller.getUIString("label-fuel", this.currentLocale.getLanguage()));
         this.lblResult = new Label();
 
         this.txtDistance = new TextField();
         this.txtFuel = new TextField();
 
-        this.btnCalculate = new Button(localization.getString("label-calculate"));
+        this.btnCalculate = new Button(this.controller.getUIString("label-calculate", this.currentLocale.getLanguage()));
 
         Button btnEN = new Button("EN");
         btnEN.setOnAction(createLanguageHandler("en"));
@@ -81,7 +81,7 @@ public class FuelCalculatorUI extends Application {
 
         Scene scene = new Scene(this.root, 350, 250);
 
-        stage.setTitle(localization.getString("label-title") + " - Leevi Laune");
+        stage.setTitle(this.controller.getUIString("label-title", this.currentLocale.getLanguage()) + " - Leevi Laune");
         stage.setScene(scene);
         stage.show();
 
@@ -93,8 +93,8 @@ public class FuelCalculatorUI extends Application {
                 double consumption = this.controller.calculateConsumption(fuel,distance);
 
                 String formatted = formatNumber(consumption);
-                this.lblResult.setText(localization.getString("label-consumption") + ": " + formatted + " L/100km");            } catch (Exception ex) {
-                this.lblResult.setText(localization.getString("error-invalid-input"));
+                this.lblResult.setText(this.controller.getUIString("label-consumption", this.currentLocale.getLanguage()) + ": " + formatted + " L/100km");            } catch (Exception ex) {
+                this.lblResult.setText(this.controller.getUIString("error-invalid-input", this.currentLocale.getLanguage()));
             }
         });
     }
@@ -103,9 +103,9 @@ public class FuelCalculatorUI extends Application {
         ResourceBundle localization = this.getLocale(la);
         this.currentLocale = new Locale(la);
 
-        this.lblDistance.setText(localization.getString("label-distance"));
-        this.lblFuel.setText(localization.getString("label-fuel"));
-        this.btnCalculate.setText(localization.getString("label-calculate"));
+        this.lblDistance.setText(this.controller.getUIString("label-distance", this.currentLocale.getLanguage()));
+        this.lblFuel.setText(this.controller.getUIString("label-fuel", this.currentLocale.getLanguage()));
+        this.btnCalculate.setText(this.controller.getUIString("label-calculate", this.currentLocale.getLanguage()));
 
         this.btnCalculate.setOnAction(e -> {
             try {
@@ -115,8 +115,8 @@ public class FuelCalculatorUI extends Application {
                 double consumption = this.controller.calculateConsumption(fuel,distance);
 
                 String formatted = formatNumber(consumption);
-                this.lblResult.setText(localization.getString("label-consumption") + ": " + formatted + " L/100km");            } catch (Exception ex) {
-                this.lblResult.setText(localization.getString("error-invalid-input"));
+                this.lblResult.setText(this.controller.getUIString("label-consumption", this.currentLocale.getLanguage()) + ": " + formatted + " L/100km");            } catch (Exception ex) {
+                this.lblResult.setText(this.controller.getUIString("error-invalid-input", this.currentLocale.getLanguage()));
             }
         });
         boolean isRTL = isRTL(la);
