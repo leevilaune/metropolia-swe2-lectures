@@ -51,4 +51,5 @@ public class DBCache {
                 language);
         this.resultService.saveResult(result);
     }
+
 }

@@ -1,0 +1,14 @@
+dev/onesnzeroes/fuelcalculator/db/DBConnection.class
+dev/onesnzeroes/fuelcalculator/db/entity/uistring/UIStringTranslationEntity.class
+dev/onesnzeroes/fuelcalculator/Main.class
+dev/onesnzeroes/fuelcalculator/model/FuelCalculator.class
+dev/onesnzeroes/fuelcalculator/db/service/ResultService.class
+dev/onesnzeroes/fuelcalculator/db/service/LanguageService.class
+dev/onesnzeroes/fuelcalculator/db/DBCache.class
+dev/onesnzeroes/fuelcalculator/db/service/UIStringService.class
+dev/onesnzeroes/fuelcalculator/view/FuelCalculatorUI.class
+dev/onesnzeroes/fuelcalculator/db/entity/result/ResultEntity.class
+dev/onesnzeroes/fuelcalculator/db/entity/uistring/UIStringEntity.class
+dev/onesnzeroes/fuelcalculator/db/entity/LanguageEntity.class
+dev/onesnzeroes/fuelcalculator/common/exceptions/NotFoundException.class
+dev/onesnzeroes/fuelcalculator/controller/FuelCalculatorController.class
