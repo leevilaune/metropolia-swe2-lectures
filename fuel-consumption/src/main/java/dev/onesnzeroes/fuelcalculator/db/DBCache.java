@@ -19,37 +19,48 @@ public class DBCache {
     private Map<String, UIStringTranslationEntity> uiStringCache;
     private Map<String, LanguageEntity> languageCache;
 
-    public DBCache(){
-        this.uiStringService  = new UIStringService();
-        this.resultService = new ResultService();
-        this.languageService = new LanguageService();
+    public DBCache(UIStringService uiStringService, ResultService resultService, LanguageService languageService){
+        this.uiStringService  = uiStringService;
+        this.resultService = resultService;
+        this.languageService = languageService;
         this.uiStringCache = new HashMap<>();
         this.languageCache = new HashMap<>();
     }
 
     public String getUIString(String id, String lang){
         String cacheId = id+"-"+lang;
-        if(this.uiStringCache.get(cacheId) != null){
-            return this.uiStringCache.get(cacheId).getUiString();
+        if (uiStringCache.containsKey(cacheId)) {
+            return uiStringCache.get(cacheId).getUiString();
         }
         UIStringTranslationEntity translationEntity = this.uiStringService.findTranslation(id, lang);
         this.uiStringCache.put(cacheId, translationEntity);
         return translationEntity.getUiString();
     }
 
-    public void saveResult(Double distance,Double consumption, Double price, Double totalFuel, Double totalCost, String lang){
-        LanguageEntity language;
-        if(this.languageCache.get(lang) == null){
-            language = this.languageCache.get(lang);
+    public void saveResult(Double distance,
+                           Double consumption,
+                           Double price,
+                           Double totalFuel,
+                           Double totalCost,
+                           String lang) {
+
+        LanguageEntity language = languageCache.get(lang);
+
+        if (language == null) {
+            language = languageService.getLanguage(lang);
+            languageCache.put(lang, language);
         }
-        language = this.languageService.getLanguage(lang);
-        ResultEntity result = new ResultEntity(distance,
+
+        ResultEntity result = new ResultEntity(
+                distance,
                 consumption,
                 price,
                 totalFuel,
                 totalCost,
-                language);
-        this.resultService.saveResult(result);
+                language
+        );
+
+        resultService.saveResult(result);
     }
 
 }

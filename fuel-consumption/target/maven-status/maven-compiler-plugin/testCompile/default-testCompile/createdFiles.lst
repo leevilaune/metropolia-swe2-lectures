@@ -1,0 +1,9 @@
+dev/onesnzeroes/fuelcalculator/model/FuelCalculatorTest.class
+dev/onesnzeroes/fuelcalculator/db/service/ResultServiceTest.class
+dev/onesnzeroes/fuelcalculator/db/entity/uistring/UIStringEntityTest.class
+dev/onesnzeroes/fuelcalculator/db/DBCacheTest.class
+dev/onesnzeroes/fuelcalculator/controller/FuelCalculatorControllerTest.class
+dev/onesnzeroes/fuelcalculator/db/entity/uistring/UIStringTranslationEntityTest.class
+dev/onesnzeroes/fuelcalculator/db/service/LanguageServiceTest.class
+dev/onesnzeroes/fuelcalculator/db/entity/LanguageEntityTest.class
+dev/onesnzeroes/fuelcalculator/db/entity/result/ResultEntityTest.class

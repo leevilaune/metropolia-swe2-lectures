@@ -23,12 +23,27 @@ public class UIStringService {
     }
 
     public UIStringTranslationEntity findTranslation(String id, String lang) {
+
+        if (id == null || lang == null) {
+            throw new IllegalArgumentException("id and lang cannot be null");
+        }
+
         try (EntityManager em = DBConnection.getInstance().createEntityManager()) {
+
             UIStringEntity entity = em.find(UIStringEntity.class, id);
+
+            if (entity == null || entity.getTranslations() == null) {
+                throw new NotFoundException(
+                        String.format("String %s not found for language %s", id, lang)
+                );
+            }
+
             return entity.getTranslations().stream()
                     .filter(trans -> trans.getLanguage().getId().equalsIgnoreCase(lang))
                     .findFirst()
-                    .orElseThrow(() -> new NotFoundException(String.format("String %s not found for language %s",id,lang)));
+                    .orElseThrow(() -> new NotFoundException(
+                            String.format("String %s not found for language %s", id, lang)
+                    ));
         }
     }
 }

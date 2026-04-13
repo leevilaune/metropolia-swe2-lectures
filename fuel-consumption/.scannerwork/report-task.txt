@@ -2,5 +2,5 @@ projectKey=fuel-consumption
 serverUrl=http://localhost:9000
 serverVersion=26.3.0.120487
 dashboardUrl=http://localhost:9000/dashboard?id=fuel-consumption
-ceTaskId=e7423fe4-19a7-411e-8b6f-3d5e8a9afc52
-ceTaskUrl=http://localhost:9000/api/ce/task?id=e7423fe4-19a7-411e-8b6f-3d5e8a9afc52
+ceTaskId=c0067b63-a644-46e0-8344-a49b72a8ffd0
+ceTaskUrl=http://localhost:9000/api/ce/task?id=c0067b63-a644-46e0-8344-a49b72a8ffd0

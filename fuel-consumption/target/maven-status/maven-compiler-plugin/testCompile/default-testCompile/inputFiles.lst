@@ -1,0 +1,9 @@
+/Users/leevilaune/IdeaProjects/metropolia-swe2-lectures/fuel-consumption/src/test/java/dev/onesnzeroes/fuelcalculator/controller/FuelCalculatorControllerTest.java
+/Users/leevilaune/IdeaProjects/metropolia-swe2-lectures/fuel-consumption/src/test/java/dev/onesnzeroes/fuelcalculator/db/DBCacheTest.java
+/Users/leevilaune/IdeaProjects/metropolia-swe2-lectures/fuel-consumption/src/test/java/dev/onesnzeroes/fuelcalculator/db/entity/LanguageEntityTest.java
+/Users/leevilaune/IdeaProjects/metropolia-swe2-lectures/fuel-consumption/src/test/java/dev/onesnzeroes/fuelcalculator/db/entity/result/ResultEntityTest.java
+/Users/leevilaune/IdeaProjects/metropolia-swe2-lectures/fuel-consumption/src/test/java/dev/onesnzeroes/fuelcalculator/db/entity/uistring/UIStringEntityTest.java
+/Users/leevilaune/IdeaProjects/metropolia-swe2-lectures/fuel-consumption/src/test/java/dev/onesnzeroes/fuelcalculator/db/entity/uistring/UIStringTranslationEntityTest.java
+/Users/leevilaune/IdeaProjects/metropolia-swe2-lectures/fuel-consumption/src/test/java/dev/onesnzeroes/fuelcalculator/db/service/LanguageServiceTest.java
+/Users/leevilaune/IdeaProjects/metropolia-swe2-lectures/fuel-consumption/src/test/java/dev/onesnzeroes/fuelcalculator/db/service/ResultServiceTest.java
+/Users/leevilaune/IdeaProjects/metropolia-swe2-lectures/fuel-consumption/src/test/java/dev/onesnzeroes/fuelcalculator/model/FuelCalculatorTest.java
