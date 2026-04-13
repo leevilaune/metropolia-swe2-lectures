@@ -35,7 +35,7 @@ public class FuelCalculatorUI extends Application {
     @Override
     public void start(Stage stage) {
 
-        this.controller = new FuelCalculatorController(this);
+        this.controller = new FuelCalculatorController();
 
         ResourceBundle localization = this.getLocale("en");
         this.currentLocale = new Locale("en");

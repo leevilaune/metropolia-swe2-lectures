@@ -5,21 +5,18 @@ import dev.onesnzeroes.fuelcalculator.db.service.LanguageService;
 import dev.onesnzeroes.fuelcalculator.db.service.ResultService;
 import dev.onesnzeroes.fuelcalculator.db.service.UIStringService;
 import dev.onesnzeroes.fuelcalculator.model.FuelCalculator;
-import dev.onesnzeroes.fuelcalculator.view.FuelCalculatorUI;
 
 public class FuelCalculatorController {
 
     private FuelCalculator calculator;
-    private FuelCalculatorUI gui;
     private UIStringService uiStringService;
     private ResultService resultService;
     private LanguageService languageService;
 
     private DBCache cache;
 
-    public FuelCalculatorController(FuelCalculatorUI gui){
+    public FuelCalculatorController(){
         this.calculator = new FuelCalculator();
-        this.gui = gui;
         this.uiStringService = new UIStringService();
         this.resultService = new ResultService();
         this.languageService = new LanguageService();

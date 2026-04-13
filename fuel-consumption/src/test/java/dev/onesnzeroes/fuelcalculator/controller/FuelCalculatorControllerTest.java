@@ -25,7 +25,7 @@ class FuelCalculatorControllerTest {
         calculatorMock = mock(FuelCalculator.class);
         cacheMock = mock(DBCache.class);
 
-        controller = new FuelCalculatorController(guiMock);
+        controller = new FuelCalculatorController();
 
         // Inject mocks via reflection (since constructor doesn't allow DI)
         setPrivateField(controller, "calculator", calculatorMock);

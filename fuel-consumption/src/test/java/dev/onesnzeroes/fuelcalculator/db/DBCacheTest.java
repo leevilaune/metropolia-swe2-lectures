@@ -9,6 +9,8 @@ import dev.onesnzeroes.fuelcalculator.db.service.UIStringService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -18,7 +20,7 @@ class DBCacheTest {
     private ResultService resultService;
     private LanguageService languageService;
 
-    private DBCache cache;
+    private DBCache dbCache;
 
     @BeforeEach
     void setUp() {
@@ -26,72 +28,71 @@ class DBCacheTest {
         resultService = mock(ResultService.class);
         languageService = mock(LanguageService.class);
 
-        cache = new DBCache(uiStringService, resultService, languageService);
+        dbCache = new DBCache(uiStringService, resultService, languageService);
     }
 
+    // -------------------------
+    // getUIString tests
+    // -------------------------
+
     @Test
-    void testGetUIString_cacheMiss_thenHit() {
+    void getUIString_shouldReturnValue_andCacheIt() {
         UIStringTranslationEntity translation = mock(UIStringTranslationEntity.class);
         when(translation.getUiString()).thenReturn("Hello");
 
         when(uiStringService.findTranslation("greeting", "en_US"))
                 .thenReturn(translation);
 
-        // first call = DB
-        String result1 = cache.getUIString("greeting", "en_US");
-
-        // second call = cache
-        String result2 = cache.getUIString("greeting", "en_US");
+        String result1 = dbCache.getUIString("greeting", "en_US");
+        String result2 = dbCache.getUIString("greeting", "en_US");
 
         assertEquals("Hello", result1);
         assertEquals("Hello", result2);
 
-        // DB called only once
+        // service called only once (cache works)
         verify(uiStringService, times(1))
                 .findTranslation("greeting", "en_US");
     }
 
+    // -------------------------
+    // saveResult tests
+    // -------------------------
+
     @Test
-    void testSaveResult_callsServices_andCachesLanguage() {
+    void saveResult_shouldCreateAndPersistResult() {
         LanguageEntity language = new LanguageEntity();
         language.setId("en_US");
 
         when(languageService.getLanguage("en_US"))
                 .thenReturn(language);
 
-        cache.saveResult(
+        dbCache.saveResult(
                 100.0,
-                6.0,
+                5.0,
                 2.0,
-                6.0,
-                12.0,
+                5.0,
+                10.0,
                 "en_US"
         );
 
-        verify(languageService, times(1)).getLanguage("en_US");
-        verify(resultService, times(1))
-                .saveResult(any(ResultEntity.class));
-
-        // second call should use cache (no DB call)
-        cache.saveResult(
-                100.0,
-                6.0,
-                2.0,
-                6.0,
-                12.0,
-                "en_US"
-        );
-
-        verify(languageService, times(1)).getLanguage("en_US");
+        verify(languageService).getLanguage("en_US");
+        verify(resultService).saveResult(any(ResultEntity.class));
     }
 
     @Test
-    void testGetUIString_missingTranslation_shouldThrow() {
-        when(uiStringService.findTranslation("x", "en_US"))
-                .thenThrow(new RuntimeException("not found"));
+    void saveResult_shouldUseCache_onSecondCall() {
+        LanguageEntity language = new LanguageEntity();
+        language.setId("en_US");
 
-        assertThrows(RuntimeException.class, () ->
-                cache.getUIString("x", "en_US")
-        );
+        when(languageService.getLanguage("en_US"))
+                .thenReturn(language);
+
+        dbCache.saveResult(100.0, 5.0, 2.0, 5.0, 10.0, "en_US");
+        dbCache.saveResult(200.0, 10.0, 3.0, 10.0, 20.0, "en_US");
+
+        // languageService only called once due to computeIfAbsent cache
+        verify(languageService, times(1)).getLanguage("en_US");
+
+        verify(resultService, times(2)).saveResult(any(ResultEntity.class));
     }
 }

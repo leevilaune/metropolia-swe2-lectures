@@ -44,12 +44,8 @@ public class DBCache {
                            Double totalCost,
                            String lang) {
 
-        LanguageEntity language = languageCache.get(lang);
-
-        if (language == null) {
-            language = languageService.getLanguage(lang);
-            languageCache.put(lang, language);
-        }
+        LanguageEntity language =
+                this.languageCache.computeIfAbsent(lang, this.languageService::getLanguage);
 
         ResultEntity result = new ResultEntity(
                 distance,
@@ -60,7 +56,7 @@ public class DBCache {
                 language
         );
 
-        resultService.saveResult(result);
+        this.resultService.saveResult(result);
     }
 
 }
