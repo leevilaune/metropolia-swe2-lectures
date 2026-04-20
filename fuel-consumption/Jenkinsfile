@@ -34,11 +34,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
-                    sh """
-                        sonar-scanner \
-                        -Dsonar.projectKey=fuel-consumption \
-                        -Dsonar.sources=src/main/java
-                    """
+                    sh 'mvn sonar:sonar'
                 }
             }
         }
