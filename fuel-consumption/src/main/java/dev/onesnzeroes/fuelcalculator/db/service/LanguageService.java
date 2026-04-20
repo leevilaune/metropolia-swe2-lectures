@@ -17,7 +17,6 @@ public class LanguageService {
             tx.commit();
         } catch (Exception e) {
             if (tx.isActive()) tx.rollback();
-            e.printStackTrace();
         } finally {
             em.close();
         }
