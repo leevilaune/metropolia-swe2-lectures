@@ -11,7 +11,7 @@ pipeline {
         DOCKERHUB_REPO = 'leevivl/metropolia-fuel-consumption'
         DOCKER_IMAGE_TAG = 'latest'
 
-        SSH_KEY_PATH = '~/.ssh/leevivl-875.pem'
+        SSH_KEY_PATH = '~/.ssh/leevivl-1350.pem'
         REMOTE_USER = 'leevivl'
         REMOTE_HOST = 'shell.metropolia.fi'
         REMOTE_PATH = '/home1-2/l/leevivl/public_html/fuel-consumption-jacoco'
