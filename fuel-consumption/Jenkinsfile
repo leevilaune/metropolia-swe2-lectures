@@ -1,7 +1,7 @@
-pipeline{
+pipeline {
     agent any
 
-    tools{
+    tools {
         maven "Maven3"
     }
 
@@ -15,40 +15,43 @@ pipeline{
         REMOTE_USER = 'leevivl'
         REMOTE_HOST = 'shell.metropolia.fi'
         REMOTE_PATH = '/home1-2/l/leevivl/public_html/fuel-consumption-jacoco'
-        SONAR_TOKEN = credentials('sonar-qube')
     }
 
-    stages{
-        stage('Build and Test'){
+    stages {
+
+        stage('Build and Test') {
             steps {
                 sh 'mvn clean test'
             }
         }
-        stage ('Code coverage'){
+
+        stage('Code coverage') {
             steps {
                 sh 'mvn jacoco:report'
             }
         }
-        stage ('Public Test Results'){
+
+        stage('Public Test Results') {
             steps {
                 junit '**/target/surefire-reports/*.xml'
+
                 sh "chmod 600 ${SSH_KEY_PATH}"
                 sh "scp -i ${SSH_KEY_PATH} -o StrictHostKeyChecking=no -r target/site ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}"
             }
         }
+
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
                     sh """
                         sonar-scanner \
                         -Dsonar.projectKey=fuel-consumption \
-                        -Dsonar.sources=src/main/java \
-                        -Dsonar.login=$SONAR_TOKEN
+                        -Dsonar.sources=src/main/java
                     """
-                    }
                 }
             }
         }
+
         stage('Build & Push Docker Image') {
             steps {
                 withCredentials([usernamePassword(
@@ -59,13 +62,9 @@ pipeline{
                     sh '''
                         set -e
 
-                        # Login to Docker Hub
                         echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
 
-                        # Build Docker image
                         docker build -t ${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG} .
-
-                        # Push Docker image
                         docker push ${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}
                     '''
                 }
